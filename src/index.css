@@ -1,0 +1,124 @@
+@import "tailwindcss";
+@plugin "daisyui";
+
+@import "tailwindcss";
+@plugin "daisyui";
+
+@import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400..900&display=swap');
+/* <style> */
+@import url('https://fonts.googleapis.com/css2?family=Geom:ital,wght@0,300..900;1,300..900&display=swap');
+
+@plugin "daisyui/theme" {
+  name: "artify-light";
+  default: true;
+  prefersdark: false;
+  color-scheme: light;
+
+  /* Base */
+  --color-base-100: #ffffff;
+  --color-base-200: #f5f5f5;
+  --color-base-300: #e5e5e5;
+  --color-base-content: #0f172a;
+
+  /* Brand (Gold) */
+  --color-primary: #EAB308;          /* gold-500 */
+  --color-primary-content: #0F0F10;  /* dark-900 */
+
+  --color-secondary: #FACC15;        /* gold-400 */
+  --color-secondary-content: #0F0F10;
+
+  --color-accent: #0F0F10;           /* gold-600 */
+  --color-accent-content: #ffffff;
+
+  /* Neutral */
+  --color-neutral: #27272A;          /* dark-700 */
+  --color-neutral-content: #ffffff;
+  /* --color-btn-login: ; */
+  --color-btn-login: #000000;
+  --color-btn-regis: #f8fafc;
+
+  /* States */
+  --color-info: #38bdf8;
+  --color-success: #22c55e;
+  --color-warning: #FACC15;
+  --color-error: #ef4444;
+
+  --color-info-content: #020617;
+  --color-success-content: #020617;
+  --color-warning-content: #020617;
+  --color-error-content: #ffffff;
+
+  /* Shape */
+  --radius-box: 0.75rem;
+  --radius-field: 0.4rem;
+  --radius-selector: 1rem;
+
+  --border: 1px;
+  --depth: 1;
+  --noise: 0;
+}
+
+@plugin "daisyui/theme" {
+  name: "artify-dark";
+  prefersdark: true;
+  color-scheme: dark;
+
+  /* Base */
+  --color-base-100: #0F0F10; /* dark-900 */
+  --color-base-200: #18181B; /* dark-800 */
+  --color-base-300: #27272A; /* dark-700 */
+  --color-base-content: #f8fafc;
+
+  /* Brand (Gold pops on dark) */
+  --color-primary: #FACC15;          /* gold-400 */
+  --color-primary-content: #0F0F10;
+
+  --color-secondary: #EAB308;        /* gold-500 */
+  --color-secondary-content: #0F0F10;
+
+  --color-accent: #CA8A04;           /* gold-600 */
+  --color-accent-content: #ffffff;
+
+  /* Neutral */
+  --color-neutral: #18181B;
+  --color-neutral-content: #f8fafc;
+  --color-btn-login: #f8fafc;
+  --color-btn-regis: #000000;
+
+  /* States */
+  --color-info: #38bdf8;
+  --color-success: #22c55e;
+  --color-warning: #FACC15;
+  --color-error: #ef4444;
+
+  --color-info-content: #020617;
+  --color-success-content: #020617;
+  --color-warning-content: #020617;
+  --color-error-content: #ffffff;
+
+  /* Shape */
+  --radius-box: 0.75rem;
+  --radius-field: 0.4rem;
+  --radius-selector: 1rem;
+
+  --border: 1px;
+  --depth: 2;
+  --noise: 0;
+}
+
+
+.cinzel-font {
+  font-family: "Cinzel", serif;
+  font-optical-sizing: auto;
+  /* font-weight: <weight>; */
+  font-style: normal;
+}
+
+
+
+.geom-font {
+  font-family: "Geom", sans-serif;
+  font-optical-sizing: auto;
+  /* font-weight: <weight>; */
+  font-style: normal;
+}
