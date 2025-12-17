@@ -7,6 +7,7 @@ import Register from "../Pages/Register/Register";
 import ArtCard from "../Templates/ArtCard/ArtCard";
 import PrivateRoute from "./PrivateRoute";
 import AddArt from "../Pages/AddArt/AddArt";
+import Explore from "../Pages/Explore/Explore";
 
 export const router = createBrowserRouter([
   {
@@ -29,6 +30,10 @@ export const router = createBrowserRouter([
         {
           path: "/add-work",
           element: <PrivateRoute><AddArt></AddArt></PrivateRoute>,
+        },
+        {
+          path: "/explore",
+          Component: Explore,
         }
     ],
     errorElement: <NoPage></NoPage>,

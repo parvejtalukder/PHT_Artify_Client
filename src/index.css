@@ -47,11 +47,14 @@
   --color-success-content: #020617;
   --color-warning-content: #020617;
   --color-error-content: #ffffff;
+  --color-menu-bg: #00000;
 
   /* Shape */
   --radius-box: 0.75rem;
   --radius-field: 0.4rem;
   --radius-selector: 1rem;
+
+
 
   --border: 1px;
   --depth: 1;
@@ -64,6 +67,7 @@
   color-scheme: dark;
 
   /* Base */
+  --color-menu-bg: #fcfafa;
   --color-base-100: #0F0F10; /* dark-900 */
   --color-base-200: #18181B; /* dark-800 */
   --color-base-300: #27272A; /* dark-700 */

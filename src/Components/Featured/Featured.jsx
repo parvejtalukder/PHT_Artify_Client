@@ -8,6 +8,7 @@ import ArtCard from '../../Templates/ArtCard/ArtCard';
 
 const Featured = () => {
     const [arts, setArts] = useState([]);
+    // const [artist, setArtist] 
     const {loading} = useContext(AuthContext);
     useEffect(() => {
         const getArts = async () => {
@@ -33,7 +34,9 @@ const Featured = () => {
             </div>
             <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 p-10'>
                 {
-                    arts.map(Art => <ArtCard key={Art._id} Art={Art}></ArtCard>)
+                    arts
+                    .filter(Art => Art.Visibility !== 'Private')
+                    .map(Art => <ArtCard key={Art._id} Art={Art}></ArtCard>)
                 }
                 {/* {
                     arts.length === 0 && 

@@ -1,12 +1,31 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Bookmark, Heart, Star } from 'lucide-react';
 import { motion } from 'framer-motion';
+import axiosPublic from '../../Context/API/axiosPublic';
 
 const ArtCard = ({ Art }) => {
-  const [favorite, setFavorite] = useState(false);
 
+  const [artist, setArtist] = useState([]);
+  const [favorite, setFavorite] = useState(false);
   const toggleFavorite = () => setFavorite(!favorite);
+
+  useEffect(() => {
+  if (!Art?.artistId) return;
+  
+    const getArtist = async () => {
+      try {
+        const res = await axiosPublic.get(`/artist/${Art.artistId}`);
+        setArtist(res.data);
+      } catch (error) {
+        console.error(error);
+      }
+    };
+  
+    getArtist();
+  }, [Art?.artistId]);
+
+  // console.log(artist);
 
   return (
     <motion.div
@@ -43,7 +62,7 @@ const ArtCard = ({ Art }) => {
 
       <div className="p-6">
         <h3 className="text-xl font-bold text-accent truncate mb-1">{Art.title}</h3>
-        <p className="text-sm mb-2">by <span className="font-semibold">{Art.artistName}</span></p>
+        <p className="text-sm mb-2">by <span className="font-semibold">{artist.Name || "Unknown Artist"}</span></p>
 
         <div className="flex justify-between items-center border-t border-gray-100 pt-4">
           <div className="flex items-center space-x-1 text-gray-400 hover:text-red-500">

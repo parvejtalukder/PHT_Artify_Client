@@ -1,4 +1,4 @@
-import { Moon, Palette, Sun } from 'lucide-react';
+import { MenuIcon, Moon, Palette, Sun, XIcon } from 'lucide-react';
 import React, { useContext, useEffect, useState } from 'react';
 import { Link, useLocation } from 'react-router';
 import { AuthContext } from '../../Context/AuthContext/AuthContext';
@@ -10,7 +10,7 @@ const Header = () => {
     const pathLocation = useLocation();
     const realPath = pathLocation.pathname;
     const { user, SignOut } = useContext(AuthContext);
-
+    const [mobileActualMenu, setIsMobileActualMenu] = useState(false);
     const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
     const [theme, setTheme] = useState("artify-light");
     
@@ -29,22 +29,54 @@ const Header = () => {
 
     const navLinks = <>
         <li><Link to="/"className={`relative hover:text-orange-700 text-btn-login ${realPath === "/" ? "after:block after:absolute after:bottom-0 after:left-0 font-bold after:w-full after:h-0.5 after:bg-accent" : ""}`}>Home</Link></li>
-        <li><Link to="/explore" className={`relative hover:text-orange-700 text-btn-login ${realPath === "/explore" ? "after:block after:absolute after:bottom-0 after:left-0 font-bold after:w-full after:h-0.5 after:bg-accent" : ""}`}>Explore Artworks</Link></li>
+        <li><Link to="/explore" className={`relative hover:text-orange-700 text-btn-login ${realPath === "/explore" ? "after:block after:absolute after:bottom-0 after:left-0 font-bold after:w-full after:h-0.5 after:bg-accent" : ""}`}>Explore</Link></li>
         {
             user && 
             <>
-                    <li><Link to="/add-work" className={`relative hover:text-orange-700 text-btn-login ${realPath === "/add" ? "after:block after:absolute after:bottom-0 after:left-0 font-bold after:w-full after:h-0.5 after:bg-accent" : ""}`}>Add Artwork</Link></li>
-                    <li><Link to="/gallery" className={`relative hover:text-orange-700 text-btn-login ${realPath === "/gallery" ? "after:block after:absolute after:bottom-0 after:left-0 font-bold after:w-full after:h-0.5 after:bg-accent" : ""}`}>My Gallery</Link></li>
-                    <li><Link to="/favorites" className={`relative hover:text-orange-700 text-btn-login ${realPath === "/favorites" ? "after:block after:absolute after:bottom-0 after:left-0 font-bold after:w-full after:h-0.5 after:bg-accent" : ""}`}>My Favorites</Link></li>
+                    <li><Link to="/add-work" className={`relative hover:text-orange-700 text-btn-login ${realPath === "/add-work" ? "after:block after:absolute after:bottom-0 after:left-0 font-bold after:w-full after:h-0.5 after:bg-accent" : ""}`}>Add Art</Link></li>
+                    <li><Link to="/gallery" className={`relative hover:text-orange-700 text-btn-login ${realPath === "/gallery" ? "after:block after:absolute after:bottom-0 after:left-0 font-bold after:w-full after:h-0.5 after:bg-accent" : ""}`}>Gallery</Link></li>
+                    <li><Link to="/favorites" className={`relative hover:text-orange-700 text-btn-login ${realPath === "/favorites" ? "after:block after:absolute after:bottom-0 after:left-0 font-bold after:w-full after:h-0.5 after:bg-accent" : ""}`}>Favorites</Link></li>
             </>
         }
+    </>
+
+    const MobileMenu = <>
+        <section className='z-40 absolute top-0 -left-4 rounded-b-2xl max-w-80 w-full h-100 bg-base-200/90 py-0 px-5 transform transition-transform duration-300 ease-in-out'>
+            <div className="flex-none lg:hidden absolute">
+              <label
+                htmlFor="my-drawer-2"
+                aria-label="open sidebar"
+                className="btn btn-square btn-ghost"
+              >
+                <section className='relative left-70 top-2 flex bg-base-200 rounded-full'>
+                    <XIcon className='text-right' onClick={() => {
+                        setIsMobileActualMenu(!mobileActualMenu);
+                    }}></XIcon>
+                </section>
+                <section onClick={() => {
+                    setIsMobileActualMenu(!mobileActualMenu);
+                }} className='relative flex flex-col justify-start items-start top-43 text-justify text-xl list-none left-6 h-auto w-400'>
+                    {navLinks}
+                </section>
+                {/* <p>PHT</p> */}
+              </label>
+            </div>
+        </section>
     </>
 
     return (
         <header className='sticky top-0 z-40 bg-base-100/70'>
             {/* <p>Header</p> */}
             <nav className='bg-transparent h-17 lg:h-20 py-4 px-5 flex justify-around gap-4 items-center border-b-2 backdrop-blur-md shadow-sm transition-colors duration-300'>
-                <Link to={'/'} className='cinzel-font transition-colors font-bold text-2xl text-accent flex justify-center items-center gap-1'> <Palette className='text-[#CA8A04] transition-colors'></Palette> ARTIFY</Link>
+                <section className='flex transition-colors justify-between items-center gap-2'>
+                    <MenuIcon onClick={() => {
+                        setIsMobileActualMenu(!mobileActualMenu);
+                    }} className='lg:hidden transition-colors text-accent'></MenuIcon>
+                    <Link to={'/'} className='cinzel-font transition-colors font-bold text-2xl text-accent flex justify-center items-center gap-1'> <Palette className='text-[#CA8A04] transition-colors'></Palette> ARTIFY</Link>
+                </section>
+                {
+                    mobileActualMenu && MobileMenu
+                }
                 <section className='geom-font hidden lg:block'>
                     <ul className='flex justify-around items-center gap-4'>
                         {navLinks}

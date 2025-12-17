@@ -1,7 +1,7 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { AuthContext } from '../../Context/AuthContext/AuthContext';
 import axiosPublic from '../../Context/API/axiosPublic';
-import { toast } from 'react-toastify';
+import { toast, ToastContainer } from 'react-toastify';
 
 const AddArt = () => {
 
@@ -42,13 +42,32 @@ const AddArt = () => {
             createdAt: new Date(),
             updatedAt: "",
         }
-        e.target.reset();
+        
         const sendDb = async () => {
             try {
                 const res = await axiosPublic.post("/add-art", ArtWork);
+                // toast.success(`${ArtWork.title} Inserted.`);
+                // e.target.reset();
+                const dataId = res.data.insertedId;
+                // const dataId = res.data.insertedId;
+                if (!dataId) throw new Error("No insertedId returned");
+                await axiosPublic.patch(`/add-art/${dataId}`, {
+                  ArtistId: artistid 
+                });
                 toast.success(`${ArtWork.title} Inserted.`);
+                e.target.reset();
+                // try {
+                //     const update = await axiosPublic.patch(`/add-art/${dataId}`, {
+                //         ArtistId: artistid
+                //     });
+                //     // console.log(update.data);
+                    
+                // } catch (error) {
+                //     // error handle
+                //     console.log(error);
+                // }
             } catch (error) {
-                toast.error(error.massage);
+                toast.error('Something went wrong');
             }
         }
         sendDb();
@@ -123,9 +142,10 @@ const AddArt = () => {
                 </div>
                 <section className='rounded-xl flex justify-center items-center'>
                     {/* <button className='input' placeholder="Add"></button> */}
-                    <input type="submit" value="Add Artwork" className='input' />
+                    <input type="submit" value="Add Artwork" className={`input ${artistid === "" ? "disabled" : ""}`} />
                 </section>
             </form>
+            <ToastContainer></ToastContainer>
         </div>
     );
 };
