@@ -1,5 +1,6 @@
 import { Sparkles } from 'lucide-react';
 import React from 'react';
+import ExploreComp from '../../Templates/ExploreTemp/ExploreComp';
 
 const Explore = () => {
     return (
@@ -10,7 +11,7 @@ const Explore = () => {
                 <p className='font-normal lg:w-xl text-center w-sm transition-colors'>Browse through our extensive collection of unique artworks curated from creators around the globe.</p>
             </div>
             <section>
-                
+                <ExploreComp></ExploreComp>
             </section>
         </div>
     );
