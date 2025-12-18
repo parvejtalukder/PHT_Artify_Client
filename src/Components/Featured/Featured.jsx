@@ -35,7 +35,7 @@ const Featured = () => {
             <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 p-10'>
                 {
                     arts
-                    .filter(Art => Art.Visibility !== 'Private')
+                    // .filter(Art => Art.Visibility !== 'Private')
                     .map(Art => <ArtCard key={Art._id} Art={Art}></ArtCard>)
                 }
                 {/* {
