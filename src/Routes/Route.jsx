@@ -8,6 +8,8 @@ import ArtCard from "../Templates/ArtCard/ArtCard";
 import PrivateRoute from "./PrivateRoute";
 import AddArt from "../Pages/AddArt/AddArt";
 import Explore from "../Pages/Explore/Explore";
+import NoPage404 from "../Pages/NoPage/NoPage404";
+import ArtDetails from "../Templates/ArtDetails/ArtDetails";
 
 export const router = createBrowserRouter([
   {
@@ -32,10 +34,14 @@ export const router = createBrowserRouter([
           element: <PrivateRoute><AddArt></AddArt></PrivateRoute>,
         },
         {
+          path: "/artwork/:id",
+          element: <PrivateRoute><ArtDetails></ArtDetails></PrivateRoute>
+        },
+        {
           path: "/explore",
           Component: Explore,
         }
     ],
-    errorElement: <NoPage></NoPage>,
+    errorElement: <NoPage404></NoPage404>,
   },
 ]);

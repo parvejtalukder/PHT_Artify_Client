@@ -12,7 +12,10 @@ const AddArt = () => {
         const fetchUserId = async () => {
             try {
                 const res = await axiosPublic.get('/user', {
-                    params: { email: user.email }
+                    params: { email: user.email },
+                    headers: {
+                        Authorization: `Bearer ${user?.accessToken}`
+                    }
                 });
                 setArtistId(res.data.userId || res.data);
             } catch (error) {
@@ -45,7 +48,11 @@ const AddArt = () => {
         
         const sendDb = async () => {
             try {
-                const res = await axiosPublic.post("/add-art", ArtWork);
+                const res = await axiosPublic.post("/add-art", ArtWork, {
+                    headers: {
+                        Authorization: `Bearer ${user?.accessToken}`
+                    }
+                });
                 // toast.success(`${ArtWork.title} Inserted.`);
                 // e.target.reset();
                 const dataId = res.data.insertedId;
@@ -53,6 +60,10 @@ const AddArt = () => {
                 if (!dataId) throw new Error("No insertedId returned");
                 await axiosPublic.patch(`/add-art/${dataId}`, {
                   ArtistId: artistid 
+                }, {
+                    headers: {
+                        Authorization: `Bearer ${user?.accessToken}`
+                    }
                 });
                 toast.success(`${ArtWork.title} Inserted.`);
                 e.target.reset();
