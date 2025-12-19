@@ -1,7 +1,14 @@
 import { Sparkles } from 'lucide-react';
-import React from 'react';
+import React, { useContext, useEffect, useState } from 'react';
+import { AuthContext } from '../../Context/AuthContext/AuthContext';
 
 const Gallery = () => {
+
+    const [myArts, setMyArts] = useState([]);
+    const {user, loading, setLoading} = useContext(AuthContext);
+
+    useEffect()
+
     return (
         <div className='max-w-6xl flex flex-col justify-center w-full mx-auto px-7 transition-all py-10 gap-6'>
             <section>
@@ -12,7 +19,7 @@ const Gallery = () => {
                 </div>
             </section>
             <section className='bg-accent w-full py-10 rounded-2xl px-20 gap-4'>
-                
+
             </section>
         </div>
     );

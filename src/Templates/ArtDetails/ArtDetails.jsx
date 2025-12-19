@@ -209,7 +209,7 @@ const ArtDetails = () => {
     <div className='lg:max-w-6xl w-full mx-auto p-10'>
         <div className='h-auto bg-accent rounded-xl'>
             {
-                artwork && 
+                artwork && !load && 
                 <section className='grid grid-cols-1 bg-base-300 lg:grid-cols-2 rounded-xl'>
                     <div className='relative rounded-t-lg lg:rounded-l-lg  p-10 bg-base-300 w-full h-full'>
                         <img src={artwork.imageURL} alt={artwork.title} className='rounded-2xl w-full h-full object-contain' />
