@@ -73,23 +73,17 @@ const ArtDetails = () => {
     const add = await axiosPublic.post("/add-like", newLike, {
       headers: { Authorization: `Bearer ${user.accessToken}` }
     });
-
-    if (add.data.success) {
-      const increase = await axiosPublic.patch(`/update-like/${artwork._id}`, null, {
-        headers: { Authorization: `Bearer ${user.accessToken}` }
-      });
-
-      if (increase.data.success) {
-        setIsLiked(true);
-        // setLikesCount(prev => prev + 1); 
-        toast.success("Liked!");
-      } else {
-        toast.error("Failed to increment likes count");
+    const increase = await axiosPublic.patch(`/update-like/${artwork._id}`, null, {
+      headers: {
+        Authorization: `Beaerer ${user.accessToken}`
       }
+    });
+    if(add.data && increase.data)  {
+      setIsLiked(true);
+      toast.success("Liked!");
     } else {
-      toast.error("Failed to like artwork");
+      toast.error("Failed to Like!");
     }
-
   } catch (error) {
     console.error(error);
     toast.error("Server error");
@@ -143,7 +137,7 @@ const ArtDetails = () => {
                         <h2 className='text-4xl text-accent mt-2'>{artwork.title}</h2>
                         <div className='flex mb-2 justify-start items-center gap-2'>
                             <p>Artwork By <span className='font-semibold'>{artist.Name}</span></p>
-                            <div onClick={handleLike} className={`${isLiked ? "text-pink-700" : "text-black"}`}><HeartIcon></HeartIcon></div>
+                            <div onClick={handleLike} className={`${isLiked ? "text-pink-700" : ""}`}><HeartIcon></HeartIcon></div>
                             <div><BookmarkIcon></BookmarkIcon></div>
                             {/* <p>Email {artist.Email}</p> */}
                         </div>
