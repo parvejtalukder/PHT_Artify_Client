@@ -10,6 +10,8 @@ import AddArt from "../Pages/AddArt/AddArt";
 import Explore from "../Pages/Explore/Explore";
 import NoPage404 from "../Pages/NoPage/NoPage404";
 import ArtDetails from "../Templates/ArtDetails/ArtDetails";
+import Gallery from "../Pages/Gallery/Gallery";
+// import Gallery from "../Pages/Gallery/Gallery";
 
 export const router = createBrowserRouter([
   {
@@ -39,7 +41,11 @@ export const router = createBrowserRouter([
         },
         {
           path: "/explore",
-          Component: Explore,
+          element: <Explore></Explore>,
+        },
+        {
+          path: "/gallery",
+          element: <PrivateRoute><Gallery></Gallery></PrivateRoute>
         }
     ],
     errorElement: <NoPage404></NoPage404>,

@@ -16,6 +16,7 @@ const ArtDetails = () => {
   const [artwork, setArtwork] = useState(null);
   const [load, setLoad] = useState(true);
   const [isLiked, setIsLiked] = useState(false);
+  const [likeId, setLikeId] = useState("");
   const [isFavorite, setIsFavorite] = useState(false);
   // const [likeCnt, setLikesCount] = ()
 
@@ -44,25 +45,40 @@ const ArtDetails = () => {
     fetchArtwork();
   }, [id, user]);
 
-   useEffect(() => {
-   const isLike = async () => {
-     try {
-       const res = await axiosPublic.get(`/likes/${user.email}`, {
-         headers: {
-           Authorization: `Bearer ${user.accessToken}`
-         }
-       });
- 
-       setIsLiked(res.data.length > 0);
-     } catch (error) {
-       console.error(error);
-     }
-   };
-
-    if (user?.email) {
+  useEffect(() => {
+    setLoad(true);
+    if (!artwork?._id || !user?.email) return; 
+  
+    const isLike = async () => {
+      try {
+        const res = await axiosPublic.get(`/likes/check`, {
+          params: {
+            artworkId: artwork._id,
+            userEmail: user.email,
+          },
+          headers: {
+            Authorization: `Bearer ${user.accessToken}`
+          }
+        });
+  
+        if (res.data) {
+          setIsLiked(true);
+          setLikeId(res.data._id); 
+          setLoad(false);
+        } else {
+          setIsLiked(false);
+          setLikeId(null);
+        }
+      } catch (error) {
+        console.error(error);
+        setIsLiked(false);
+        setLikeId(null);
+      }
+    };
+  
     isLike();
-    }
-}, [user?.email]);
+  }, [artwork?._id, user?.email]);
+
 
 
   const handleLike = async () => {
@@ -70,10 +86,8 @@ const ArtDetails = () => {
 
   try {
     if (isLiked) {
-      // Optional: implement unlike logic later
-      // setIsLiked(false);
-      // setLikesCount(prev => prev - 1);
-      toast.error("Disliked!");
+      // const unlike = await axiosPublic.delete
+      toast.error("Already Liked!");
       return;
     }
 
@@ -107,12 +121,68 @@ const ArtDetails = () => {
 };
 
 
+  // useEffect
+  useEffect(() => {
+    setLoad(true);
+  if (!artwork?._id || !user?.email) return;
+
+  const checkFavorite = async () => {
+    // setLoading(true);
+    try {
+      const res = await axiosPublic.get('/favorites/check', {
+        params: {
+          artworkId: artwork._id,
+          userEmail: user.email,
+        },
+        headers: {
+          Authorization: `Bearer ${user.accessToken}`,
+        },
+      });
+
+      if (res.data) {
+        setIsFavorite(true);
+        setLoad(false);
+      } else {
+        setIsFavorite(false);
+        setLoad(false);
+      }
+    } catch (error) {
+      console.error('Failed to check favorite', error);
+      setIsFavorite(false);
+      setLoad(false);
+    }
+    // setLoading(false);
+  };
+
+  checkFavorite();
+}, [artwork?._id, user?.email]);
+
+
+
   const handleFavorite = async () => {
-    // if (!user) return toast.error('Please login to add to favorites');
-    // if (!artwork) return;
-    // const status = await api.toggleFavorite(user.uid, artwork.id);
-    // setIsFavorite(status);
-    // toast.success(status ? 'Added to Favorites' : 'Removed from Favorites');
+    if(isFavorite) {
+      toast.error("Already in Favorites!");
+      return;
+    }
+    setLoading(true);
+    try {
+      const newFav = {
+        artworkId: artwork._id,
+        userEmail: user.email, 
+      }
+      const addFav = await axiosPublic.post('/add-fav', newFav, {
+        headers: {
+          Authorization: `Bearer ${user.accessToken}`
+        }
+      })
+      if(addFav.data) {
+        setLoading(false);
+        toast.success("Added to  Favorites!");
+      }
+    } catch (error) {
+      setLoading(false);
+      toast.error("Failed to Add!")
+    }
   };
 //   console.log(artwork);
   const [artist, setArtist] = useState([]);
@@ -132,7 +202,8 @@ const ArtDetails = () => {
     getArtist();
   }, [artwork?.artistId]);
 
-  console.log(isLiked);
+  // console.log(isLiked);
+  // console.log(isFavorite);
 
   return (
     <div className='lg:max-w-6xl w-full mx-auto p-10'>
@@ -151,9 +222,9 @@ const ArtDetails = () => {
                         </div>
                         <h2 className='text-4xl text-accent mt-2'>{artwork.title}</h2>
                         <div className='flex mb-2 justify-start items-center gap-2'>
-                            <p>Artwork By <span className='font-semibold'>{artist.Name}</span></p>
+                            <p>Artwork By <span className='font-semibold'>{artist.Name || "ArtistName"}</span></p>
                             <div onClick={handleLike} className={`${isLiked ? "text-pink-700" : ""}`}><HeartIcon></HeartIcon></div>
-                            <div><BookmarkIcon></BookmarkIcon></div>
+                            <div><BookmarkIcon onClick={handleFavorite} className={`${isFavorite ? "text-pink-700" : ""}`}></BookmarkIcon></div>
                             {/* <p>Email {artist.Email}</p> */}
                         </div>
                         <hr />

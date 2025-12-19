@@ -50,13 +50,13 @@ const ArtCard = ({ Art }) => {
 
         <button
           onClick={toggleFavorite}
-          className="absolute top-4 right-4 p-2 bg-base-200 rounded-full hover:scale-110 z-10"
+          className="absolute top-4 right-4 p-2  rounded-full hover:scale-110 z-10"
           title={favorite ? "Remove from favorites" : "Add to favorites"}
         >
-          <Bookmark
+          {/* <Bookmark
             size={20}
             className={favorite ? "fill-gold-500 text-gold-500" : "text-gray-500"}
-          />
+          /> */}
         </button>
       </div>
 
@@ -67,7 +67,7 @@ const ArtCard = ({ Art }) => {
         <div className="flex justify-between items-center border-t border-gray-100 pt-4">
           <div className="flex items-center space-x-1 text-gray-400 hover:text-red-500">
             <Heart size={18} />
-            <span>{Art.likes}</span>
+            <span className='text-sm'>{Art.likesCount}</span>
           </div>
           <Link
             to={`/artwork/${Art._id}`}

@@ -13,6 +13,7 @@ const Explore = () => {
     // const [artist, setArtist] 
     const {loading, setLoading} = useContext(AuthContext);
     useEffect(() => {
+      setLoading(true);
         const getArts = async () => {
             try {
                 const Data = await axiosPublic.get("/artworks");
@@ -21,6 +22,7 @@ const Explore = () => {
             } catch (err) {
                 // toast.error(err.massage);
             } 
+            setLoading(false);
         }
         getArts();
     }, [])
@@ -50,6 +52,11 @@ const Explore = () => {
     };
 
     const NoArts = <> <div className='h-full w-full  flex justify-center items-center py-30 px-50'><p>NO ARTS</p></div> </>
+    
+    const catFilter = async () => {
+
+    }
+
     return (
         <div className='max-w-6xl flex flex-col justify-center w-full mx-auto px-7 transition-all py-10 gap-6'>
             <div className='flex flex-col justify-center items-center gap-3'>
