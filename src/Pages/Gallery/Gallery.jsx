@@ -12,7 +12,7 @@ const Gallery = () => {
                 </div>
             </section>
             <section className='bg-accent w-full py-10 rounded-2xl px-20 gap-4'>
-
+                
             </section>
         </div>
     );
