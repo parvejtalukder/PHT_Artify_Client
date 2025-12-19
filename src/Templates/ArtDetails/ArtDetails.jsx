@@ -44,12 +44,26 @@ const ArtDetails = () => {
     fetchArtwork();
   }, [id, user]);
 
-  useEffect(() => {
-    const isLike = async () => {
+   useEffect(() => {
+   const isLike = async () => {
+     try {
+       const res = await axiosPublic.get(`/likes/${user.email}`, {
+         headers: {
+           Authorization: `Bearer ${user.accessToken}`
+         }
+       });
+ 
+       setIsLiked(res.data.length > 0);
+     } catch (error) {
+       console.error(error);
+     }
+   };
 
-    }
+    if (user?.email) {
     isLike();
-  }, [])
+    }
+}, [user?.email]);
+
 
   const handleLike = async () => {
   setLoading(true);
@@ -57,7 +71,7 @@ const ArtDetails = () => {
   try {
     if (isLiked) {
       // Optional: implement unlike logic later
-      setIsLiked(false);
+      // setIsLiked(false);
       // setLikesCount(prev => prev - 1);
       toast.error("Disliked!");
       return;
@@ -79,7 +93,7 @@ const ArtDetails = () => {
       }
     });
     if(add.data && increase.data)  {
-      setIsLiked(true);
+      // setIsLiked(true);
       toast.success("Liked!");
     } else {
       toast.error("Failed to Like!");
@@ -117,7 +131,8 @@ const ArtDetails = () => {
     };
     getArtist();
   }, [artwork?.artistId]);
-  // console.log(artist);
+
+  console.log(isLiked);
 
   return (
     <div className='lg:max-w-6xl w-full mx-auto p-10'>
