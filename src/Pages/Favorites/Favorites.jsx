@@ -62,7 +62,7 @@ const Favorites = () => {
                     fav && <>
                     <section className='grid lg:grid-cols-3 gap-5 grid-cols-1'>
                         {
-                            fav.map(Fav => <FavCard key={Fav} Art={Fav}></FavCard>)
+                            fav.map(favOne => <FavCard key={favOne._id} favOne={favOne}></FavCard>)
                         }
                     </section>
                     </>

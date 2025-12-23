@@ -1,10 +1,31 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { motion } from 'framer-motion';
 import { toast, ToastContainer } from 'react-toastify';
+import { AuthContext } from '../../../Context/AuthContext/AuthContext';
+import { useState } from 'react';
+import axiosPublic from '../../../Context/API/axiosPublic';
+// import axios from 'axios';
 
-const FavCard = ({ Fav }) => {
+const FavCard = ({ favOne }) => {
+    const {user, setLoading} = useContext(AuthContext);
+    const [Fav, setFav] = useState("");
+    const getFav =  async () => {
+        try {
+            const theFav = await axiosPublic.get(`/artwork/${favOne.artworkId}`, {
+                headers: {
+                    Authorization: `Bearer ${user.accessToken}`
+                }
+            })
+            if(theFav.data) {
+                setFav(theFav.data);
+            } 
+        } catch (error) {
+            toast.error("Error While Loading!");
+        }
+    }
+    getFav();
     // toast.success("It's loaded");
-    
+    // console.log(Fav);
   return (
     <motion.div
       className="bg-base-300/80 rounded-2xl shadow-lg overflow-hidden hover:shadow-2xl transition-shadow duration-300 w-full max-w-sm mx-auto md:max-w-md"
