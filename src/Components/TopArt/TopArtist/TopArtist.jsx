@@ -32,7 +32,7 @@ const TopArtist = ({ Top }) => {
     >
       <div className="relative inline-block mb-6">
         <img 
-          src={Top.imageURL} 
+          src={artist.Photo} 
           alt={artist.Name} 
           className="w-32 h-32 rounded-full object-cover border-2 border-base-content p-1" 
         />

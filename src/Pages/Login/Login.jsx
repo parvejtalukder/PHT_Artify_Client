@@ -6,7 +6,7 @@ import { useNavigate } from 'react-router';
 
 const Login = () => {
     const sendTo = useNavigate();
-    const {user, GoogleSignIn, SignInWithEmailPass} = useContext(AuthContext);
+    const {user, setLoading, GoogleSignIn, SignInWithEmailPass} = useContext(AuthContext);
     const err = () => toast.error("Error While Logging In!");
 
     const handleLoginForm = (e) => {
@@ -27,7 +27,8 @@ const Login = () => {
         })
         .catch(err => {
             toast.error(err.message);
-            // sendTo("/");
+            sendTo("/");
+            setLoading(false);
             return;
             // err();
         })
@@ -42,6 +43,7 @@ const Login = () => {
       } catch (error) {
         // err();
         toast.error(error.message);
+        setLoading(false);
         return;
         // sendTo("/");
       }

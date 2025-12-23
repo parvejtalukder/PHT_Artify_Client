@@ -9,7 +9,7 @@ import axiosPublic from '../../Context/API/axiosPublic';
 const Register = () => {
 
     const navigate = useNavigate();
-    const { user, CreateUserWithEmailPass, UpdateProfile, GoogleSignIn } = useContext(AuthContext);
+    const { user, setLoading, CreateUserWithEmailPass, UpdateProfile, GoogleSignIn } = useContext(AuthContext);
     const registered = () => toast.success("Registration Completed!");
     const regiErr = () => toast.error("Error During Registration!");
     const passError = () => toast.error("Must contain uppercase, lowercase letter, and minimum 6 characters.");
@@ -46,7 +46,9 @@ const Register = () => {
                         }
                         try {
                             const resPnse = await axiosPublic.post('/users', newUser);
+                            setLoading(false);
                         } catch (error) {
+                            setLoading(false);
                             toast.error(error.message);
                         }
                         registered();
@@ -56,9 +58,11 @@ const Register = () => {
                     })
                     .catch(error => {
                         toast.error(error.message);
+                        setLoading(false);
                     });
             })
             .catch(err => {
+                setLoading(false);
                 setPassErr(err.message);
                 toast.error(err.message);
             });
@@ -103,6 +107,7 @@ const Register = () => {
                     //     toast.success(resPnse.data.message); 
                     // }
                 } catch (error) {
+                    setLoading(false);
                     toast.error(error.message);
                 }
                 registered();
@@ -111,7 +116,9 @@ const Register = () => {
                 }, 2000);
             })
             .catch(err => {
+                setLoading(false);
                 toast.error(err.message);
+
             });
     };
 

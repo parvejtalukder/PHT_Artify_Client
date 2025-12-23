@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 const axiosPublic = axios.create({
-  baseURL: 'http://localhost:3500/',
+  baseURL: 'https://artifyserverside.vercel.app/',
 });
 
 export default axiosPublic;
