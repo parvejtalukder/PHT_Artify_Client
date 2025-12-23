@@ -32,7 +32,8 @@ const Featured = () => {
                 <h2 className='text-2xl font-bold transition-colors'>FEATURED ARTWORKS</h2>
                 <p className='font-normal lg:w-xl text-center w-sm transition-colors'>Discover the latest additions to our curated gallery, handpicked for their exceptional quality and creativity.</p>
             </div>
-            <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 p-10'>
+            {
+                arts && <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 p-10'>
                 {
                     arts
                     // .filter(Art => Art.Visibility !== 'Private')
@@ -44,7 +45,13 @@ const Featured = () => {
                         <span className="loading loading-bars loading-xl"></span>
                     </>
                 } */}
-            </div>
+                </div>
+            }
+            {
+                !arts && <>
+                <p>No Arts</p>
+                </>
+            }
         </div>
     );
 };

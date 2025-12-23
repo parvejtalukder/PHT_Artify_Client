@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { toast, ToastContainer } from 'react-toastify';
 import { AuthContext } from '../../../Context/AuthContext/AuthContext';
@@ -9,7 +9,10 @@ import axiosPublic from '../../../Context/API/axiosPublic';
 const FavCard = ({ favOne }) => {
     const {user, setLoading} = useContext(AuthContext);
     const [Fav, setFav] = useState("");
-    const getFav =  async () => {
+
+
+    useEffect(() => {
+        const getFav =  async () => {
         try {
             const theFav = await axiosPublic.get(`/artwork/${favOne.artworkId}`, {
                 headers: {
@@ -24,8 +27,39 @@ const FavCard = ({ favOne }) => {
         }
     }
     getFav();
+    }, [favOne])
+
     // toast.success("It's loaded");
     // console.log(Fav);
+    const remvoeFav = async () => {
+      setLoading(true);
+      try {
+        const del = await axiosPublic.delete('/fav/delete', {
+          params: {
+            artId: favOne.artworkId,
+            email: user.email,
+          },
+          headers: {
+            Authorization: `Bearer ${user.accessToken}`
+          }
+        });
+        if(del.data) {
+          setLoading(false);
+          setTimeout(() => {
+            toast.success("Removed from favs!");
+          }, 2500);
+        } else {
+          setLoading(false);
+          setTimeout(()=> {
+            toast.success("Error while proccessing!");
+          }, 2500)
+        }
+      } catch (error) {
+        setLoading(false);
+        toast.success("Internal error!");
+      }
+    }
+
   return (
     <motion.div
       className="bg-base-300/80 rounded-2xl shadow-lg overflow-hidden hover:shadow-2xl transition-shadow duration-300 w-full max-w-sm mx-auto md:max-w-md"
@@ -34,26 +68,26 @@ const FavCard = ({ favOne }) => {
     >
       <div className="relative aspect-[4/3]">
         <img
-          src={Fav?.imageURL || 'https://img.daisyui.com/images/stock/photo-1606107557195-0e29a4b5b4aa.webp'}
-          alt={Fav?.title || 'Artwork'}
+          src={Fav?.imageURL}
+          alt={Fav?.title || 'Loading'}
           className="w-full h-full object-cover"
         />
         <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent flex items-end p-4">
           <span className="bg-gold-500 text-white text-xs font-bold uppercase px-2 py-1 rounded">
-            {Fav?.category || 'Category'}
+            {Fav?.category || 'Loading'}
           </span>
         </div>
       </div>
 
       <div className="p-4 flex flex-col gap-2">
         <h2 className="text-lg md:text-xl font-semibold text-base-content truncate">
-          {Fav?.title || 'Artwork Title'}
+          {Fav?.title || 'Loading'}
         </h2>
         <p className="text-sm md:text-base text-base-content/95 line-clamp-3">
-          {Fav?.description || 'No description available.'}
+          {Fav?.description || 'Loading'}
         </p>
         <div className="flex justify-between items-center mt-2">
-          <button className="px-5 py-2 text-white rounded-full cinzel-font font-medium transition-all bg-accent shadow-[inset_0_0_4px_rgba(0,0,0,0.3)] hover:shadow-yellow-500/30">
+          <button onClick={remvoeFav} className="px-5 py-2 text-white rounded-full cinzel-font font-medium transition-all bg-accent shadow-[inset_0_0_4px_rgba(0,0,0,0.3)] hover:shadow-yellow-500/30">
           Remove Favs
           </button>
           {/* <span className="text-sm md:text-base font-medium text-gray-500">
@@ -62,7 +96,7 @@ const FavCard = ({ favOne }) => {
         </div>
         {/* <ToastContainer></ToastContainer> */}
       </div>
-      <ToastContainer></ToastContainer>
+      <ToastContainer/>
     </motion.div>
   );
 };
