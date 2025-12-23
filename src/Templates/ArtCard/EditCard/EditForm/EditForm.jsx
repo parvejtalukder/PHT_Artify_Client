@@ -6,7 +6,7 @@ import axiosPublic from '../../../../Context/API/axiosPublic';
 
 const EditForm = () => {
   const { id } = useParams();
-  const { user } = useContext(AuthContext);
+  const { user, loading, setLoading } = useContext(AuthContext);
   const [artwork, setArtwork] = useState(null);
 
   useEffect(() => {
@@ -33,12 +33,51 @@ const EditForm = () => {
     return <div className="text-center py-10">Loading...</div>;
   }
 
+const AddArtToDb = async (e) => {
+  e.preventDefault();
+  setLoading(true);
+
+  const ArtWork = {
+    title: e.target.title.value,
+    imageURL: e.target.imageURL.value,
+    category: e.target.category.value,
+    medium: e.target.medium.value,
+    description: e.target.description.value,
+    dimensions: e.target.dimensions.value,
+    price: e.target.price.value,
+    visibility: e.target.visibility.value,
+    artistId: artwork.artistId || user._id,
+    updatedAt: new Date()
+  };
+
+  try {
+    const res = await axiosPublic.patch(`/edit-art/${artwork._id}`, ArtWork, {
+      headers: { Authorization: `Bearer ${user.accessToken}` }
+    });
+
+    setLoading(false);
+
+    if (res.data === 1) {
+      toast.success(`${ArtWork.title} Edited!`);
+      setArtwork({ ...artwork, ...ArtWork });
+    } else {
+      toast.info('No changes were made.');
+    }
+  } catch (err) {
+    setLoading(false);
+    toast.error('Something went wrong while updating artwork.');
+    console.error(err);
+  }
+};
+
+
+
   return (
     <div className="lg:max-w-6xl w-full mx-auto p-10">
       <section className="text-center mb-6">
         <h2 className="text-2xl font-bold">EDIT {artwork.title}</h2>
       </section>
-      <form className="bg-accent w-full rounded-2xl 
+      <form onSubmit={AddArtToDb} className="bg-accent w-full rounded-2xl 
                  px-6 py-8 
                  sm:px-10 sm:py-10 
                  lg:px-20 lg:py-14 

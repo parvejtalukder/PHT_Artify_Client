@@ -12,7 +12,7 @@ createRoot(document.getElementById('root')).render(
     {/* <App /> */}
     <AuthProvider>
       <RouterProvider router={router} />
-      <ToastContainer></ToastContainer>
+      {/* <ToastContainer></ToastContainer> */}
     </AuthProvider>
   </StrictMode>,
 )
