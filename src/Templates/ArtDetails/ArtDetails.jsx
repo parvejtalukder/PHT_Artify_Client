@@ -87,6 +87,7 @@ const ArtDetails = () => {
   try {
     if (isLiked) {
       // const unlike = await axiosPublic.delete
+      setLoading(false);
       toast.error("Already Liked!");
       return;
     }
@@ -107,17 +108,23 @@ const ArtDetails = () => {
       }
     });
     if(add.data && increase.data)  {
+      setLoading(false); 
       // setIsLiked(true);
-      toast.success("Liked!");
+      setTimeout(() => {
+        toast.success("Liked!");
+      }, [1000]);
     } else {
-      toast.error("Failed to Like!");
+      setLoading(false); 
+            setTimeout(() => {
+        toast.error("Falied to like!");
+      }, [1000]);
+      // toast.error("Failed to Like!");
     }
   } catch (error) {
+    setLoading(false); 
     console.error(error);
     toast.error("Server error");
-  } finally {
-    setLoading(false); 
-  }
+  } 
 };
 
 
@@ -127,6 +134,7 @@ const ArtDetails = () => {
   if (!artwork?._id || !user?.email) return;
 
   const checkFavorite = async () => {
+    setLoad(true);
     // setLoading(true);
     try {
       const res = await axiosPublic.get('/favorites/check', {
@@ -142,14 +150,17 @@ const ArtDetails = () => {
       if (res.data) {
         setIsFavorite(true);
         setLoad(false);
+        // toast.success("Added to favorites!")
       } else {
         setIsFavorite(false);
         setLoad(false);
+        // toast.error("Faild to add on favorites!")
       }
     } catch (error) {
       console.error('Failed to check favorite', error);
       setIsFavorite(false);
       setLoad(false);
+      toast.error("Error while proccess!")
     }
     // setLoading(false);
   };
@@ -177,11 +188,17 @@ const ArtDetails = () => {
       })
       if(addFav.data) {
         setLoading(false);
-        toast.success("Added to  Favorites!");
+        setTimeout(()=> {
+          toast.success("Added to Favorites");
+        }, [1000]);
+        // toast.success("Added to  Favorites!");
       }
     } catch (error) {
       setLoading(false);
-      toast.error("Failed to Add!")
+      // toast.error("Failed to Add!")
+      setTimeout(()=> {
+          toast.error("Failed to add");
+        }, [1000]);
     }
   };
 //   console.log(artwork);
@@ -211,11 +228,11 @@ const ArtDetails = () => {
             {
                 artwork && !load && 
                 <section className='grid grid-cols-1 bg-base-300 lg:grid-cols-2 rounded-xl'>
-                    <div className='relative rounded-t-lg lg:rounded-l-lg  p-10 bg-base-300 w-full h-full'>
-                        <img src={artwork.imageURL} alt={artwork.title} className='rounded-2xl w-full h-full object-contain' />
+                    <div className='relative rounded-t-lg lg:rounded-l-lg  p-10 bg-base-300 w-full h-full '>
+                        <img src={artwork.imageURL} alt={artwork.title} className='rounded-2xl w-full max-h-80 h-full object-center' />
                     </div>
                     
-                    <div className='relative lg:rounded-r-lg rounded-b-lg flex flex-col bg-base-300 p-10 w-full h-full'>
+                    <div className='relative lg:rounded-r-lg rounded-b-lg flex flex-col bg-base-300 p-10 w-full justify-center h-full'>
                         {/* <h2>{artwork.title}</h2> */}
                         <div className='px-2 py-1 text-white rounded-full cinzel-font font-medium transition-all bg-accent w-30 shadow-[inset_0_0_4px_rgba(0,0,0,0.3)] hover:shadow-yellow-500/30'>
                             <p className='text-center'>{artwork.category}</p>

@@ -11,6 +11,8 @@ import Explore from "../Pages/Explore/Explore";
 import NoPage404 from "../Pages/NoPage/NoPage404";
 import ArtDetails from "../Templates/ArtDetails/ArtDetails";
 import Gallery from "../Pages/Gallery/Gallery";
+import EditForm from "../Templates/ArtCard/EditCard/EditForm/EditForm";
+import Favorites from "../Pages/Favorites/Favorites";
 // import Gallery from "../Pages/Gallery/Gallery";
 
 export const router = createBrowserRouter([
@@ -46,6 +48,14 @@ export const router = createBrowserRouter([
         {
           path: "/gallery",
           element: <PrivateRoute><Gallery></Gallery></PrivateRoute>
+        },
+        {
+          path: "/artwork/edit/:id", 
+          element: <PrivateRoute><EditForm></EditForm></PrivateRoute>
+        },
+        {
+          path: "/favorites", 
+          element: <PrivateRoute><Favorites></Favorites></PrivateRoute>
         }
     ],
     errorElement: <NoPage404></NoPage404>,

@@ -108,7 +108,7 @@ const AddArt = () => {
                 </section>
                 <section>
                     <legend className="fieldset-legend text-base-100">Description</legend>
-                    <textarea required={true} type="text" className="input h-30 lg:h-10 placeholder:text-left placeholder:flex placeholder:flex-row placeholder:justify-center placeholder:items-center placeholder:pt-2" placeholder="Medium URL of your Artwork"  name='description'/>
+                    <textarea required={true} type="text" className="textarea w-full lg:min-h-[50px] input h-30 lg:h-10 placeholder:text-left placeholder:flex placeholder:flex-row placeholder:justify-center placeholder:items-center placeholder:pt-2" placeholder="Description URL of your Artwork"  name='description'/>
                 </section>
                 <section>
                     <legend className="fieldset-legend text-base-100">Dimensions (Optional)</legend>
