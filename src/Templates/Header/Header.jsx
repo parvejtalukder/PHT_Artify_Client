@@ -105,7 +105,7 @@ const Header = () => {
                             realPath !== "/login" && <><Link to="/login" className="px-3 text-btn-login hover:text-gold-600 cinzel-font font-medium transition-colors">Login</Link></>
                         }
                         {
-                            realPath !== "/register"  && <><Link to="/register" className="px-5 py-2 text-white rounded-full cinzel-font font-medium transition-all bg-accent shadow-[inset_0_0_4px_rgba(0,0,0,0.3)] hover:shadow-yellow-500/30">Register</Link></>
+                            realPath !== "/register"  && <><Link to="/register" className="hidden lg:block px-5 py-2 text-white rounded-full cinzel-font font-medium transition-all bg-accent shadow-[inset_0_0_4px_rgba(0,0,0,0.3)] hover:shadow-yellow-500/30">Register</Link></>
                         }                          
                         </>
                     }
