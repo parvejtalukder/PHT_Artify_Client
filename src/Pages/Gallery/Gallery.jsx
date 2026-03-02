@@ -27,7 +27,7 @@ const Gallery = () => {
             setArts(getUser.data.Artworks);
             setUserFromEmail(getUser.data);
         } catch (error) {
-            confirm.length(error);
+            console.error(error);
         }
     }
 
@@ -48,18 +48,16 @@ const Gallery = () => {
                 </div>
             </section>
             <section className='bg-accent/40 w-full py-15 border-t-3 border-accent rounded-2xl px-20 gap-4'>
-                {
-                    arts.length === 0 && <>
-                    <div className=' flex justify-center items-center text-sm p-10 text-center'>
-                            <p>NO ARTWORKS YOU HAVE!</p>
-                        </div>
-                        </>
-                }
+                {(!arts || arts.length === 0) && (
+                   <div className='flex justify-center items-center text-sm p-10 text-center'>
+                       <p>NO ARTWORKS YOU HAVE!</p>
+                   </div>
+                )}
                 {
                     arts && <>
                     <section className='grid lg:grid-cols-3 gap-5 grid-cols-1'>
                         {
-                            arts.map(Art => <EditCard key={Art} Art={Art}></EditCard>)
+                            arts.map(Art => <EditCard key={Art.id} Art={Art}></EditCard>)
                         }
                     </section>
                     </>
